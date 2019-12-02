@@ -3,7 +3,7 @@
     {
       "name": "web3-api",
       "script": "npm",
-      "args": "build"
+      "args": "run-script build"
     }
   ]
 }
