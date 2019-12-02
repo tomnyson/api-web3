@@ -24,7 +24,8 @@
     "joi"
   ],
   "scripts": {
-    "start": "node examples/simple.js",
+    "start": "NODE_ENV=development ./node_modules/.bin/netlify-lambda serve examples/simple.js",
+    "build": "NODE_ENV=production ./node_modules/.bin/netlify-lambda build examples/simple.js",
     "start:basic": "node examples/basic.js",
     "start:debug": "node examples/debug.js",
     "start:jwt": "node examples/jwt.js",
@@ -54,6 +55,7 @@
     "handlebars": "^4.5.3",
     "http-status": "^1.0.1",
     "json-schema-ref-parser": "^6.1.0",
+    "netlify-lambda": "^1.6.3",
     "node-fetch": "^2.6.0",
     "swagger-parser": "4.0.2",
     "swagger-ui-dist": "^3.22.1",
