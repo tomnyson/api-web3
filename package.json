@@ -24,8 +24,8 @@
     "joi"
   ],
   "scripts": {
-    "start": "NODE_ENV=development ./node_modules/.bin/netlify-lambda serve examples/simple.js",
-    "build": "NODE_ENV=production ./node_modules/.bin/netlify-lambda build examples/simple.js",
+    "build": "netlify-lambda build examples/simple.js",
+    "start": "nodemon examples/simple.js",
     "start:basic": "node examples/basic.js",
     "start:debug": "node examples/debug.js",
     "start:jwt": "node examples/jwt.js",
@@ -105,12 +105,6 @@
       "prettier --write",
       "git add"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm test"
-    }
   },
   "prettier": {
     "printWidth": 120,
