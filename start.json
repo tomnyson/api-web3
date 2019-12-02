@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "web3-api",
+      "script": "npm",
+      "args": "build"
+    }
+  ]
+}
