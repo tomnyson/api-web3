@@ -24,7 +24,7 @@
     "joi"
   ],
   "scripts": {
-    "build": "npm examples/simple.js",
+    "build": "node examples/simple.js",
     "start": "nodemon examples/simple.js",
     "start:basic": "node examples/basic.js",
     "start:debug": "node examples/debug.js",
