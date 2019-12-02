@@ -24,7 +24,7 @@
     "joi"
   ],
   "scripts": {
-    "build": "netlify-lambda build examples/simple.js",
+    "build": "NODE_ENV=production ./node_modules/.bin/netlify-lambda build examples/simple.js",
     "start": "nodemon examples/simple.js",
     "start:basic": "node examples/basic.js",
     "start:debug": "node examples/debug.js",
