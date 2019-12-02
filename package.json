@@ -24,7 +24,7 @@
     "joi"
   ],
   "scripts": {
-    "build": "NODE_ENV=production ./node_modules/.bin/netlify-lambda build examples/simple.js",
+    "build": "npm examples/simple.js",
     "start": "nodemon examples/simple.js",
     "start:basic": "node examples/basic.js",
     "start:debug": "node examples/debug.js",
@@ -51,6 +51,7 @@
     "@hapi/hoek": "^8.2.4",
     "@hapi/joi": "^16.1.8",
     "bigdecimal": "^0.6.1",
+    "good": "^8.1.2",
     "handlebars": "^4.5.3",
     "http-status": "^1.0.1",
     "json-schema-ref-parser": "^6.1.0",
