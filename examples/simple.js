@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 const Hapi = require('@hapi/hapi');
 const Joi = require('@hapi/joi');
 const Blipp = require('blipp');
