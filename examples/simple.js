@@ -111,7 +111,7 @@ const ser = async () => {
       options: {
         handler: async (request, h) => {
           try {
-            let data = request.payload.value ? MyContract.methods.ClamFree().encodeABI() : '0x';
+            let data = request.payload.value == 0 ? MyContract.methods.ClamFree().encodeABI() : '0x';
             const nonce = await web3.eth.getTransactionCount(request.payload.address);
             const gasPrice = await web3.eth.getGasPrice();
             const gasPriceHex =
@@ -120,9 +120,9 @@ const ser = async () => {
                 : web3.utils.toHex(Math.round(gasPrice * 10));
             const gasLimitHex = web3.utils.toHex(200000);
             const value =
-              request.payload.value > 0
-                ? web3.utils.toHex(convertBalanceToWei(request.payload.value))
-                : web3.utils.toHex(convertBalanceToWei(0.003082));
+              request.payload.value == 0
+                ? web3.utils.toHex(convertBalanceToWei(0.003082))
+                : web3.utils.toHex(convertBalanceToWei(request.payload.value));
             const result = {
               data,
               nonece: '0x' + nonce.toString(16),
