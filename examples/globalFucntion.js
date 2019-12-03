@@ -13,7 +13,7 @@ const convertBalanceToWei = (strValue, iDecimal = 18) => {
     .split('.')[0];
 };
 const config = {
-  constractAddress: '0x6b7C4fB444Bf61DbD9fFECEfe6a85d1DB8C2F4CB',
+  constractAddress: process.env.ENVIROMENT === 'prod' ? process.env.CONSTRACT : process.env.CONSTRACT_DEV,
   abi: [
     { inputs: [], payable: false, stateMutability: 'nonpayable', type: 'constructor' },
     {

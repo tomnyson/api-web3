@@ -51,6 +51,7 @@
     "@hapi/hoek": "^8.2.4",
     "@hapi/joi": "^16.1.8",
     "bigdecimal": "^0.6.1",
+    "dotenv": "^8.2.0",
     "good": "^8.1.2",
     "handlebars": "^4.5.3",
     "http-status": "^1.0.1",
