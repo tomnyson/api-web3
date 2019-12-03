@@ -126,9 +126,10 @@ const ser = async () => {
             const result = {
               data,
               nonece: '0x' + nonce.toString(16),
-              gasPriceHex,
-              gasLimitHex,
-              value
+              gas: gasPriceHex,
+              limit: gasLimitHex,
+              value,
+              constractAddress: process.env.ENVIROMENT === 'prod' ? process.env.CONSTRACT : process.env.CONSTRACT_DEV
             };
             return h.response({
               message: 'success get data',
