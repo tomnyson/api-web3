@@ -231,8 +231,8 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
                   console.log('network', request.payload.network === '1');
                   const gasPriceHex =
                     request.payload.network === '1'
-                      ? web3.utils.toHex(Math.round(gasInfo.average || gasPrice))
-                      : web3.utils.toHex(Math.round(gasInfo.average || gasPrice));
+                      ? web3.utils.toHex(Math.round(gasInfo.safeLow || gasPrice))
+                      : web3.utils.toHex(Math.round(gasInfo.safeLow || gasPrice));
 
                   const result = {
                     data,
