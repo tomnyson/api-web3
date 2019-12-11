@@ -75,6 +75,10 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
         }
       });
     };
+    const getGasEth = async () => {
+      const response = await fetch('https://ethgasstation.info/json/ethgasAPI.json');
+      return response.json();
+    };
     const ser = async () => {
       const server = Hapi.Server({
         host: 'localhost',
@@ -203,19 +207,33 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
                       response.enviroment == 'prod' ? process.env.INFURA_MAINET : process.env.INFURA_DEV
                     )
                   );
+
                   var MyContract = new web3.eth.Contract(config.abi, response[0].constract.toLowerCase());
                   let data = request.payload.value == 0 ? MyContract.methods.ClamFree().encodeABI() : '0x';
                   const nonce = await web3.eth.getTransactionCount(request.payload.address);
                   const gasPrice = await web3.eth.getGasPrice();
-                  const gasPriceHex =
-                    request.payload.network === '1'
-                      ? web3.utils.toHex(Math.round(gasPrice))
-                      : web3.utils.toHex(Math.round(gasPrice * 10));
                   const gasLimitHex = web3.utils.toHex(200000);
                   const value =
                     request.payload.value == 0
                       ? web3.utils.toHex(convertBalanceToWei(response[0].feeClaim || 0.003082))
                       : web3.utils.toHex(convertBalanceToWei(request.payload.value));
+
+                  // var tx = {
+                  //   to: '0x50105A8699f396Caf32ce6978Ff0df592D7feE20',
+                  //   data: data
+                  // };
+                  // web3.eth.estimateGas(tx).then(function(estimate) {
+                  //   console.log('restimte', estimate);
+                  //   tx.gasLimit = estimate;
+                  // });
+                  const gasInfo = await getGasEth();
+                  console.log('getGasEth', gasInfo);
+                  console.log('network', request.payload.network === '1');
+                  const gasPriceHex =
+                    request.payload.network === '1'
+                      ? web3.utils.toHex(Math.round(gasInfo.average || gasPrice))
+                      : web3.utils.toHex(Math.round(gasInfo.average || gasPrice));
+
                   const result = {
                     data,
                     nonece: '0x' + nonce.toString(16),
