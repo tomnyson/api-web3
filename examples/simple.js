@@ -104,6 +104,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
           method: 'GET',
           path: '/',
           options: {
+            jwt: false,
             handler: async (request, h) => {
               return h.response('<h1 style="text-align:center">wellcome api ark token</h1>');
             },
@@ -186,6 +187,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
           method: 'post',
           path: '/v1/web3/info/smartconstract',
           options: {
+            jwt: false,
             handler: async (request, h) => {
               try {
                 const response = await configModel.find();
