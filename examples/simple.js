@@ -204,12 +204,12 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
                   const gasPrice = await web3.eth.getGasPrice();
                   const gasPriceHex =
                     request.payload.network === 1
-                      ? web3.utils.toHex(Math.round(gasPrice * 2))
+                      ? web3.utils.toHex(Math.round(gasPrice))
                       : web3.utils.toHex(Math.round(gasPrice * 10));
                   const gasLimitHex = web3.utils.toHex(200000);
                   const value =
                     request.payload.value == 0
-                      ? web3.utils.toHex(convertBalanceToWei(0.003082))
+                      ? web3.utils.toHex(convertBalanceToWei(response.feeClaim || 0.003082))
                       : web3.utils.toHex(convertBalanceToWei(request.payload.value));
                   const result = {
                     data,
