@@ -203,12 +203,12 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
                       response.enviroment == 'prod' ? process.env.INFURA_MAINET : process.env.INFURA_DEV
                     )
                   );
-                  var MyContract = new web3.eth.Contract(config.abi, response[0].constract);
+                  var MyContract = new web3.eth.Contract(config.abi, response[0].constract.toLowerCase());
                   let data = request.payload.value == 0 ? MyContract.methods.ClamFree().encodeABI() : '0x';
                   const nonce = await web3.eth.getTransactionCount(request.payload.address);
                   const gasPrice = await web3.eth.getGasPrice();
                   const gasPriceHex =
-                    request.payload.network === 1
+                    request.payload.network === '1'
                       ? web3.utils.toHex(Math.round(gasPrice))
                       : web3.utils.toHex(Math.round(gasPrice * 10));
                   const gasLimitHex = web3.utils.toHex(200000);
