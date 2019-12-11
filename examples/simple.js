@@ -190,15 +190,20 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
             auth: false,
             handler: async (request, h) => {
               try {
+                // await configModel.create({
+                //   constract: '0x50105A8699f396Caf32ce6978Ff0df592D7feE20',
+                //   network: '1',
+                //   enviroment: 'prod',
+                //   feeClaim: 0.000136
+                // });
                 const response = await configModel.find();
-                console.log('response', response);
                 if (response) {
                   web3 = new Web3(
                     new Web3.providers.HttpProvider(
                       response.enviroment == 'prod' ? process.env.INFURA_MAINET : process.env.INFURA_DEV
                     )
                   );
-                  var MyContract = new web3.eth.Contract(config.abi, response.constract);
+                  var MyContract = new web3.eth.Contract(config.abi, response[0].constract);
                   let data = request.payload.value == 0 ? MyContract.methods.ClamFree().encodeABI() : '0x';
                   const nonce = await web3.eth.getTransactionCount(request.payload.address);
                   const gasPrice = await web3.eth.getGasPrice();
@@ -209,7 +214,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
                   const gasLimitHex = web3.utils.toHex(200000);
                   const value =
                     request.payload.value == 0
-                      ? web3.utils.toHex(convertBalanceToWei(response.feeClaim || 0.003082))
+                      ? web3.utils.toHex(convertBalanceToWei(response[0].feeClaim || 0.003082))
                       : web3.utils.toHex(convertBalanceToWei(request.payload.value));
                   const result = {
                     data,
@@ -217,8 +222,10 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
                     gas: gasPriceHex,
                     limit: gasLimitHex,
                     value,
-                    constractAddress: response.enviroment === 'prod' ? response.constract : process.env.CONSTRACT_DEV
+                    constractAddress:
+                      response[0].enviroment === 'prod' ? response[0].constract : process.env.CONSTRACT_DEV
                   };
+                  console.log('result', response[0].feeClaim);
                   return h.response({
                     message: 'success get data',
                     data: { ...result }
@@ -270,7 +277,6 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
                 //   }
                 // );
                 const update = await updateModel(id, payload);
-                console.log('update', update);
                 if (update) {
                   return h.response({
                     message: 'success edit',
